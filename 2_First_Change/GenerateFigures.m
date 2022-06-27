@@ -54,7 +54,7 @@ if ~isempty(Tcovid)
     subplot(3,2,5); histogram(res.mcmc.eta(:,3),20,'FaceAlpha',.6,'FaceColor',ColorPlot); hold on
     title('$\bar{s}_2$','Interpreter','Latex')
     subplot(3,2,6); histogram(res.mcmc.eta(:,4),20,'FaceAlpha',.6,'FaceColor',ColorPlot); hold on
-    title('$\bar{s}_3$','Interpreter','Latex')
+    title('$s^*$','Interpreter','Latex')
 end
 
 subplot(3,2,1:2);
