@@ -3,8 +3,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 close all
-clear all
+clearvars
 cd results
+figures_dir = 'C:\Users\Jota\Dropbox\Aplicaciones\Overleaf\Econ722-Term-Paper';
+
 
 %% figure 1
 f1=figure(1);
@@ -25,7 +27,7 @@ if ~isempty(Tcovid)
     title('$\rho$','Interpreter','Latex')
 end 
 
-clear all
+clearvars -except figures_dir
 load CV_May2021
 ColorPlot=ColorGrey;
 subplot(3,2,1:2); histogram(res.mcmc.lambda,20,'FaceAlpha',.6,'FaceColor',ColorPlot); hold on
@@ -41,7 +43,7 @@ if ~isempty(Tcovid)
     title('$\rho$','Interpreter','Latex')
 end
 
-clear all
+clearvars -except figures_dir
 load Baseline_May2021
 ColorPlot=ColorCovid;
 subplot(3,2,1:2); histogram(res.mcmc.lambda,20,'FaceAlpha',.6,'FaceColor',ColorPlot); hold on
@@ -61,14 +63,55 @@ subplot(3,2,1:2);
 legend('constant volatility - sample ends in 2020:2','constant volatility - sample ends in 2021:5',...
       'Covid volatility - sample ends in 2021:5')
 
-saveas(gcf, 'C:\Users\Javier\Dropbox\Aplicaciones\Overleaf\Econ722-Term-Paper\replication_figure_1.png');
+saveas(gcf, [figures_dir '\replication_figure_1.png']);
 close(figure(1))
+
+% Additional figures
+%histogram(res.mcmc.eta(:,4),20)
+
+    % Create rho *s2 and more 
+    s3_temp = res.mcmc.eta(:,3) .* res.mcmc.eta(:,4); 
+    s4_temp = res.mcmc.eta(:,3) .* res.mcmc.eta(:,4).^2; 
+    s5_temp = res.mcmc.eta(:,3) .* res.mcmc.eta(:,4).^3; 
+    s6_temp = res.mcmc.eta(:,3) .* res.mcmc.eta(:,4).^4; 
+    s12_temp = res.mcmc.eta(:,3) .* res.mcmc.eta(:,4).^10; 
+
+    % Plots 
+    figure(5)
+    histogram(s3_temp,20, 'FaceAlpha',.6,'FaceColor',ColorPlot) 
+    hold on
+    title('$\bar{s}_2 \cdot \rho$','Interpreter','Latex')
+    saveas(gcf, [figures_dir '\replication_figure_5_s_3.png']) 
+    close(figure(5))
+
+    figure(6)
+    histogram(s4_temp,20, 'FaceAlpha',.6,'FaceColor',ColorPlot) 
+    hold on
+    title('$\bar{s}_2 \cdot \rho^2$','Interpreter','Latex')
+    saveas(gcf, [figures_dir '\replication_figure_5_s_4.png']) 
+    close(figure(6))
+
+    figure(7)
+    histogram(s5_temp,20, 'FaceAlpha',.6,'FaceColor',ColorPlot) 
+    hold on
+    title('$\bar{s}_2 \cdot \rho^3$','Interpreter','Latex')
+    saveas(gcf, [figures_dir '\replication_figure_5_s_5.png']) 
+    close(figure(7))
+
+    figure(8)
+    histogram(s12_temp,20, 'FaceAlpha',.6,'FaceColor',ColorPlot) 
+    hold on
+    title('$\bar{s}_2 \cdot \rho^{10}$','Interpreter','Latex')
+    saveas(gcf, [figures_dir '\replication_figure_5_s_12.png']) 
+    close(figure(8))
+     
+ 
  
 %% figure 2
 f2=figure(2);
 f2.Position = [0, 0, 700, 600];
 
-clear all
+clearvars -except figures_dir
 load Baseline_May2021
 ColorPlot=ColorCovid;
 qqq=[.025 .16 .5 .84 .975];     % percentiles of the posterior distribution
@@ -82,7 +125,7 @@ for jn = 1:n
     title(series(jn));
 end
 
-clear all
+clearvars -except figures_dir
 load CVFeb2020_May2021
 ColorPlot=ColorBase;
 count=0;
@@ -92,7 +135,7 @@ for jn = 1:n
     plot([0:H]', squeeze(sIRF1(:,jn,round(.5*M)))/sIRF1(1,1,round(.5*M)),'color',ColorPlot,'LineWidth',2,'LineStyle','--'); hold on; grid on;
 end
 
-clear all
+clearvars -except figures_dir
 load CV_May2021
 ColorPlot=ColorGrey;
 count=0;
@@ -112,11 +155,11 @@ end
     %'constant volatility - sample ends in 2020:2: posterior medians','constant volatility - sample ends in 2021:5: posterior medians', ...
     %'Location', 'south')
  
-saveas(gcf, 'C:\Users\Javier\Dropbox\Aplicaciones\Overleaf\Econ722-Term-Paper\replication_figure_2.png');
+saveas(gcf, [figures_dir '\replication_figure_2.png']);
 close(figure(2))
  
 %% figure 3
-clear all
+clearvars -except figures_dir
 f31=figure(31);
 f31.Position = [0, 0, 350, 800];
 
@@ -148,7 +191,7 @@ for ii=1:n
 end
 sgtitle('Covid volatility - est. sample ends in 2020:6','FontSize',12,'FontWeight','bold','color',ColorPlot)
 
-% clear all
+% clearvars -except figures_dir
 f32=figure(32);
 f32.Position = [0, 0, 350, 800];
 
@@ -190,15 +233,15 @@ for jj=1:n
     clear YMIN YMAX YLIM
 end
 
-saveas(f32, 'C:\Users\Javier\Dropbox\Aplicaciones\Overleaf\Econ722-Term-Paper\replication_figure_32.png');
+saveas(f32, [figures_dir '\replication_figure_32.png']);
 close(figure(32))
-saveas(f31, 'C:\Users\Javier\Dropbox\Aplicaciones\Overleaf\Econ722-Term-Paper\replication_figure_31.png');
+saveas(f31, [figures_dir '\replication_figure_31.png']);
 close(figure(31))
 
  
 
 %% figure 4
-clear all
+clearvars -except figures_dir
 f41=figure(41);
 f41.Position = [0, 0, 350, 800];
 
@@ -227,7 +270,7 @@ end
 sgtitle('Covid volatility - est. sample ends in 2021:5','FontSize',12,'FontWeight','bold','color',ColorPlot)
 
 
-% clear all
+% clearvars -except figures_dir
 f42=figure(42);
 f42.Position = [0, 0, 350, 800];
 
@@ -264,7 +307,7 @@ for jj=1:n
     clear YMIN YMAX YLIM
 end
 
-saveas(f42, 'C:\Users\Javier\Dropbox\Aplicaciones\Overleaf\Econ722-Term-Paper\replication_figure_42.png');
+saveas(f42, [figures_dir '\replication_figure_42.png']);
 close(figure(42))
-saveas(f41, 'C:\Users\Javier\Dropbox\Aplicaciones\Overleaf\Econ722-Term-Paper\replication_figure_41.png');
+saveas(f41, [figures_dir '\replication_figure_41.png']);
 close(figure(41))
