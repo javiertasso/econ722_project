@@ -12,7 +12,6 @@ figures_dir = 'C:\Users\Jota\Dropbox\Aplicaciones\Overleaf\Econ722-Term-Paper\';
 % Simulate some data
 T = 200; 
 mmu_true = 0;
-
 time = transpose(1:T); 
 
 % Frequentist analysis ----------------------------------------------------
